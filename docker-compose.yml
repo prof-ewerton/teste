@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  postgres-compose:
+    image: postgres
+    environment:
+      DB_USER: "postgres"
+      DB_PASS: "postgres"
+    ports:
+      - "15432:5432"
+    volumes:
+      - ${HOME}/Documentos/Docker/servlet-example/PostgreSQL/servlet-example:/var/lib/postgresql/data
+
+  jsp-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+        - postgres-compose
+    ports:
+        - "8089:8080"
